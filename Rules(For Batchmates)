@@ -1,6 +1,18 @@
+Entire project Planned-Designed-Written-Implemented-Tested-Owling By Niladri Biswas.
+
+Here I have:
+A. Entire Documentation for trustVote including PPT.
+B. TrustVoteCodeBase (Except NodeModules, Run npm i)
+C. TrustVoteEntireCodebase.7z
+
+
+Need 2 more Programs:
+1. Ganache
+2. Metamask
+
+Commands:
 npm i
-
-truffle migrate --reset
-
-
+npx truffle i
+npx truffle migrate --reset
 npm start
+
