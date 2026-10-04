@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TrustVote — Official E-Voting Portal</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Favicons -->
+  <link href="images/favicon.png" rel="icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="others/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="others/animate/animate.min.css" rel="stylesheet">
+
+  <!-- Stylesheets (theme loads last and layers on top) -->
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/theme.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Tricolor accent -->
+<div id="eci-tricolor"></div>
+
+<!--==========================
+   Header
+ ============================-->
+<header id="header">
+  <div class="container">
+    <div id="logo" class="pull-left">
+      <h1><a href="index.html"><span>TRUST</span>VOTE</a></h1>
+    </div>
+
+    <nav id="nav-menu-container">
+      <ul class="nav-menu" id="nav-menu">
+        <li class="menu-active"><a href="index.html">Portal Home</a></li>
+        <li><a href="vote.html">Vote</a></li>
+        <li><a href="results.html">Results</a></li>
+        <li class="admin-only-link"><a href="admin.html">Admin Panel</a></li>
+      </ul>
+    </nav><!-- #nav-menu-container -->
+  </div>
+</header><!-- #header -->
+
+<!--==========================
+  Live Election Widget
+============================-->
+<div id="eciLiveWidget" aria-live="polite">
+  <div id="eciWidgetBody"></div>
+</div>
+
+<!--==========================
+  Intro Section
+============================-->
+<section id="intro">
+  <div class="intro-container wow fadeIn">
+    <h1>Decentralized <span>Voting System</span></h1>
+    <p class="eci-hero-sub">
+      A cryptographically secured e-voting platform on Ethereum. Identity is authenticated
+      via MetaMask wallet signatures, voter eligibility is enforced on-chain, and
+      double-voting is strictly prevented.
+    </p>
+
+    <div id="loader">
+      <svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
+        <circle cx="170" cy="170" r="160"/>
+        <circle cx="170" cy="170" r="135"/>
+        <circle cx="170" cy="170" r="110"/>
+        <circle cx="170" cy="170" r="85"/>
+      </svg>
+    </div>
+
+    <div id="content" style="display: none;" class="eci-card">
+      <!-- Wallet & Role Bar -->
+      <div class="row eci-wallet-row">
+        <div class="col-md-7 text-left">
+          <div id="accountAddress" style="font-size: 13px; word-break: break-all; min-height: 22px;"></div>
+        </div>
+        <div class="col-md-5 text-right">
+          <span id="roleBadge"></span>
+          <span id="electionStateBadge" style="margin-left: 5px;"></span>
+        </div>
+      </div>
+
+      <!-- Voter Status Alert Box -->
+      <div id="voterEligibilityBox" style="margin: 16px 0 4px 0;"></div>
+
+      <!-- Live Blockchain Metrics -->
+      <div class="row text-center" style="margin-top: 18px;">
+        <div class="col-md-4" style="margin-bottom: 10px;">
+          <div class="eci-stat">
+            <div class="eci-stat-value" id="statCandidatesCount">0</div>
+            <div class="eci-stat-label">Candidates</div>
+          </div>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 10px;">
+          <div class="eci-stat">
+            <div class="eci-stat-value" id="statEligibleCount">0</div>
+            <div class="eci-stat-label">Whitelisted Voters</div>
+          </div>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 10px;">
+          <div class="eci-stat accent-red">
+            <div class="eci-stat-value" id="statVotesCast">0</div>
+            <div class="eci-stat-label">Total Votes Cast</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Action Cards -->
+      <div class="row text-center eci-actions-row" style="margin-top: 20px; margin-bottom: 6px;">
+        <div class="col-md-4" style="margin-bottom: 10px;">
+          <a href="vote.html" class="btn eci-btn saffron btn-block">
+            <i class="fa fa-check-square-o"></i> Cast Vote
+          </a>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 10px;">
+          <a href="results.html" class="btn eci-btn navy btn-block">
+            <i class="fa fa-bar-chart"></i> View Results
+          </a>
+        </div>
+        <div class="col-md-4 eci-admin-gated" style="margin-bottom: 10px;">
+          <a href="admin.html" class="btn eci-btn ghost btn-block">
+            <i class="fa fa-cogs"></i> Admin Panel
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--==========================
+  Footer
+============================-->
+<footer id="eciFooter">
+  <div class="eci-f-inner">
+    <div class="eci-f-tricolor"></div>
+    <div class="eci-f-brand"><i class="fa fa-university"></i> TRUSTVOTE </div>
+    <div class="eci-f-actions">
+      <!-- data-a / data-b carry split, reversed fragments; widget.js reassembles
+           them only on click, so the address never appears in the page source.
+           Regenerate a fragment with: "text".split('').reverse().join('') -->
+      <a href="#" class="eci-f-btn" data-kind="mail" data-a="sawsibbirdalin.rd" data-b="moc.liamg">
+        <i class="fa fa-envelope"></i> Email Us
+      </a>
+      <a href="#" class="eci-f-btn" data-kind="phone" data-a="308799444819+" data-b="">
+        <i class="fa fa-phone"></i> Call Us
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+<script src="js/app.js"></script>
+<!-- Presentation layer: live widget, countdown, greeting, footer -->
+<script src="js/widget.js"></script>
+
+<script src="others/jquery/jquery.min.js"></script>
+<script src="others/jquery/jquery-migrate.min.js"></script>
+<script src="others/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="others/easing/easing.min.js"></script>
+<script src="others/superfish/hoverIntent.js"></script>
+<script src="others/superfish/superfish.min.js"></script>
+<script src="others/wow/wow.min.js"></script>
+<script src="others/venobox/venobox.min.js"></script>
+<script src="others/owlcarousel/owl.carousel.min.js"></script>
+<!-- Main Javascript File -->
+<script src="js/main.js"></script>
+</body>
+</html>

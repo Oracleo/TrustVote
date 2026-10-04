@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>TrustVote — Election Administration Panel</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="images/favicon.png" rel="icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="others/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="others/animate/animate.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/theme.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="eci-tricolor"></div>
+
+<header id="header">
+    <div class="container">
+        <div id="logo" class="pull-left">
+            <h1><a href="index.html"><span>TRUST</span>VOTE</a></h1>
+        </div>
+        <nav id="nav-menu-container">
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html">Portal Home</a></li>
+                <li><a href="vote.html">Vote</a></li>
+                <li><a href="results.html">Results</a></li>
+                <li class="menu-active admin-only-link"><a href="admin.html">Admin Panel</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div id="eciLiveWidget" aria-live="polite">
+  <div id="eciWidgetBody"></div>
+</div>
+
+<section id="intro">
+    <div class="intro-container wow fadeIn">
+        <h1>Election <span>Administration Panel</span></h1>
+
+        <div id="loader">
+            <svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
+                <circle cx="170" cy="170" r="160"/>
+                <circle cx="170" cy="170" r="135"/>
+                <circle cx="170" cy="170" r="110"/>
+                <circle cx="170" cy="170" r="85"/>
+            </svg>
+        </div>
+
+        <div id="content" style="display: none;" class="eci-card">
+            <!-- Account & Role Header -->
+            <div class="row eci-wallet-row">
+                <div class="col-md-7 text-left">
+                    <div id="accountAddress" style="font-size: 13px; word-break: break-all; min-height: 22px;"></div>
+                </div>
+                <div class="col-md-5 text-right">
+                    <span id="roleBadge"></span>
+                    <span id="electionStateBadge" style="margin-left: 5px;"></span>
+                </div>
+            </div>
+
+            <!-- Admin Status Alert -->
+            <div id="adminAlert" style="margin-top: 16px;"></div>
+
+            <!-- Transaction Feedback Container -->
+            <div id="adminTxStatus" style="margin-top: 12px;"></div>
+
+            <!-- 1. Election Lifecycle Control -->
+            <div class="admin-only" style="margin-top: 20px; background: var(--eci-mist); border: 1px solid var(--eci-line); border-radius: 12px; padding: 18px;">
+                <h5 class="eci-card-title"><span class="eci-icon-chip green"><i class="fa fa-sliders"></i></span> Election Lifecycle Control</h5>
+                <p class="eci-subtle" style="margin-bottom: 14px;">
+                    Transitions are irreversible on-chain: <code>Registration &rarr; Voting &rarr; Ended</code>.
+                </p>
+                <div>
+                    <button type="button" class="btn eci-btn green" id="btnStartElection" onclick="App.startElection(); return false;">Start Election (Open Voting)</button>
+                    <button type="button" class="btn eci-btn red" id="btnEndElection" onclick="App.endElection(); return false;">End Election (Close &amp; Seal Tally)</button>
+                </div>
+                <div id="adminSwitchVoterHint" style="display: none; margin-top: 12px; padding: 10px 12px; background: #eaf2fd; border-left: 3px solid #14498f; font-size: 13px; color: #14498f; border-radius: 6px;">
+                    <strong>Voting is active.</strong> The admin wallet cannot cast a ballot. Open MetaMask, switch to a whitelisted voter account, then vote on the <a href="vote.html">Vote page</a>.
+                </div>
+                <hr class="eci-divider">
+                <!-- Voting window schedule (presentation only, stored in localStorage) -->
+                <h6 class="eci-card-title" style="font-size: 14px;"><span class="eci-icon-chip saffron"><i class="fa fa-calendar"></i></span> Voting Window Schedule</h6>
+                <form id="eciScheduleForm">
+                    <div class="row">
+                        <div class="col-sm-4 form-group" style="margin-bottom: 10px;">
+                            <label for="eciSchedDate">Election Date</label>
+                            <input type="date" class="form-control" id="eciSchedDate" required>
+                        </div>
+                        <div class="col-sm-4 form-group" style="margin-bottom: 10px;">
+                            <label for="eciSchedFrom">Voting Opens At</label>
+                            <input type="time" class="form-control" id="eciSchedFrom" required>
+                        </div>
+                        <div class="col-sm-4 form-group" style="margin-bottom: 10px;">
+                            <label for="eciSchedTo">Voting Closes At</label>
+                            <input type="time" class="form-control" id="eciSchedTo" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn eci-btn saffron"><i class="fa fa-save"></i> Save Schedule</button>
+                </form>
+                <div id="eciSchedMsg"></div>
+                <small class="eci-subtle" style="display: block; margin-top: 8px;">The schedule is stored in this browser and drives the "Time Remaining" countdown shown on every page.</small>
+            </div>
+            <!-- 2. Candidate Management (Registration phase only) -->
+            <div id="addCandidateSection" class="admin-only" style="margin-top: 20px; background: var(--eci-mist); border: 1px solid var(--eci-line); border-radius: 12px; padding: 18px;">
+                <h5 class="eci-card-title"><span class="eci-icon-chip saffron"><i class="fa fa-user-plus"></i></span> Candidate Management</h5>
+                <p class="eci-subtle" style="margin-bottom: 12px;">Available during the Registration Phase only.</p>
+                <form onSubmit="App.addCandidate(); return false;">
+                    <div class="row">
+                        <div class="form-group col-md-6" style="margin-bottom: 10px;">
+                            <label for="candidateName">Candidate Full Name</label>
+                            <input type="text" class="form-control" id="candidateName" placeholder="e.g. Alice Smith" required>
+                        </div>
+                        <div class="form-group col-md-6" style="margin-bottom: 10px;">
+                            <label for="candidateParty">Party Affiliation</label>
+                            <input type="text" class="form-control" id="candidateParty" placeholder="e.g. Democratic Alliance" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn eci-btn saffron"><i class="fa fa-plus"></i> Register Candidate to Contract</button>
+                </form>
+            </div>
+
+            <!-- Registered Candidates -->
+            <h5 class="eci-card-title" style="margin-top: 24px;"><span class="eci-icon-chip"><i class="fa fa-users"></i></span> Registered Candidates</h5>
+            <div class="table-responsive">
+            <table class="table eci-table">
+                <thead>
+                <tr>
+                    <th scope="col" style="width: 50px;">#</th>
+                    <th scope="col">Candidate Name</th>
+                    <th scope="col">Party Name</th>
+                    <th scope="col" style="width: 80px;">Votes</th>
+                </tr>
+                </thead>
+                <tbody id="candidatesResults">
+                </tbody>
+            </table>
+            </div>
+            <!-- 3. Voter Eligibility Whitelist -->
+            <div id="whitelistSection" class="admin-only" style="margin-top: 20px; background: var(--eci-mist); border: 1px solid var(--eci-line); border-radius: 12px; padding: 18px;">
+                <h5 class="eci-card-title"><span class="eci-icon-chip gold"><i class="fa fa-address-card"></i></span> Voter Eligibility Whitelist</h5>
+                <p class="eci-subtle" style="margin-bottom: 12px;">Authorizes an Ethereum address to cast exactly one ballot during the Voting Phase.</p>
+                <form onSubmit="App.registerVoter(); return false;">
+                    <div class="input-group" style="margin-bottom: 10px;">
+                        <input type="text" class="form-control" id="voterAddressInput" placeholder="Enter Voter Ethereum Address (0x...)" pattern="0x[a-fA-F0-9]{40}" required>
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn eci-btn navy">Authorize Address</button>
+                        </span>
+                    </div>
+                </form>
+                <small class="eci-subtle">Total Whitelisted Voters: <strong id="statEligibleCount">0</strong></small>
+                <div id="whitelistedVotersList"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer id="eciFooter">
+  <div class="eci-f-inner">
+    <div class="eci-f-tricolor"></div>
+    <div class="eci-f-brand"><i class="fa fa-university"></i> TRUSTVOTE </div>
+    <div class="eci-f-actions">
+      <!-- data-a / data-b carry split, reversed fragments; widget.js reassembles
+           them only on click, so the address never appears in the page source.
+           Regenerate a fragment with: "text".split('').reverse().join('') -->
+      <a href="#" class="eci-f-btn" data-kind="mail" data-a="sawsibbirdalin.rd" data-b="moc.liamg">
+        <i class="fa fa-envelope"></i> Email Us
+      </a>
+      <a href="#" class="eci-f-btn" data-kind="phone" data-a="308799444819+" data-b="">
+        <i class="fa fa-phone"></i> Call Us
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+<script src="js/app.js"></script>
+<script src="js/widget.js"></script>
+<script src="others/jquery/jquery.min.js"></script>
+<script src="others/jquery/jquery-migrate.min.js"></script>
+<script src="others/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="others/easing/easing.min.js"></script>
+<script src="others/superfish/hoverIntent.js"></script>
+<script src="others/superfish/superfish.min.js"></script>
+<script src="others/wow/wow.min.js"></script>
+<script src="others/venobox/venobox.min.js"></script>
+<script src="others/owlcarousel/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

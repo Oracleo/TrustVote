@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>TrustVote</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Favicons -->
+    <link href="images/favicon.png" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="others/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="others/animate/animate.min.css" rel="stylesheet">
+    <link href="others/venobox/venobox.css" rel="stylesheet">
+    <link href="others/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Other Stylesheet File -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<!--==========================
+   Header
+ ============================-->
+<header id="header">
+    <div class="container">
+
+        <div id="logo" class="pull-left">
+            <h1><a href="index.html"><span>TRUST</span>VOTE</a></h1>
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html">Portal Home</a></li>
+                <li><a href="vote.html">Vote</a></li>
+                <li><a href="results.html">Results</a></li>
+                <li class="menu-active buy-tickets"><a href="admin.html">Admin Panel</a></li>
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header><!-- #header -->
+
+<!--==========================
+  Intro Section
+============================-->
+<section id="intro">
+    <div class="intro-container wow fadeIn">
+        <h1 style="text-transform: initial">Register <span>New Candidate</span></h1>
+        
+        <div id="loader">
+            <svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
+                <circle cx="170" cy="170" r="160" stroke="#E2007C"/>
+                <circle cx="170" cy="170" r="135" stroke="#404041"/>
+                <circle cx="170" cy="170" r="110" stroke="#E2007C"/>
+                <circle cx="170" cy="170" r="85" stroke="#404041"/>
+            </svg>
+        </div>
+
+        <div id="content" style="display: none; background-color: rgba(255, 255, 255, 0.96); color: #2f3138; padding: 25px 30px; border-radius: 8px; max-width: 650px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: left;">
+            
+            <div class="row" style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                <div class="col-md-7">
+                    <span style="font-size: 13px; font-weight: 600; color: #555;">Connected Wallet:</span><br/>
+                    <span id="accountAddress" style="font-size: 12px; font-family: monospace; word-break: break-all;"></span>
+                </div>
+                <div class="col-md-5 text-right">
+                    <span id="roleBadge"></span>
+                    <span id="electionStateBadge" style="margin-left: 5px;"></span>
+                </div>
+            </div>
+
+            <!-- Admin Transaction Status Feedback -->
+            <div id="adminTxStatus"></div>
+
+            <form class="addCandidateForm" onSubmit="App.addCandidate(); return false;">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="candidateName" style="font-weight: 600; color: #0e1b4d;">Candidate Full Name:</label>
+                    <input type="text" class="form-control" id="candidateName" placeholder="e.g. Eleanor Vance" required>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="candidateParty" style="font-weight: 600; color: #0e1b4d;">Political Party / Affiliation:</label>
+                    <input type="text" class="form-control" id="candidateParty" placeholder="e.g. National Transparency Front" required>
+                </div>
+
+                <button type="submit" class="btn btn-block" style="background-color: #f82249; color: white; padding: 10px; font-weight: 700; width: 100%;">
+                    Submit Candidate to Blockchain
+                </button>
+            </form>
+
+            <div style="margin-top: 15px; text-align: center;">
+                <a href="admin.html" style="font-size: 13px; color: #0e1b4d;">&larr; Back to Admin Panel</a>
+            </div>
+
+            <div style="background-color: #f8f9fa; border-left: 3px solid #f82249; padding: 8px 12px; font-size: 11px; color: #666; margin-top: 15px;">
+                <strong>Contract Requirement:</strong> Candidates can only be registered during the Registration Phase by the election admin address.
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+<script src="js/app.js"></script>
+
+<script src="others/jquery/jquery.min.js"></script>
+<script src="others/jquery/jquery-migrate.min.js"></script>
+<script src="others/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="others/easing/easing.min.js"></script>
+<script src="others/superfish/hoverIntent.js"></script>
+<script src="others/superfish/superfish.min.js"></script>
+<script src="others/wow/wow.min.js"></script>
+<script src="others/venobox/venobox.min.js"></script>
+<script src="others/owlcarousel/owl.carousel.min.js"></script>
+<!-- Main Javascript File -->
+<script src="js/main.js"></script>
+</body>
+</html>

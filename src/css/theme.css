@@ -1,0 +1,1278 @@
+/* ============================================================
+   TrustVote — "Election Commission" Design System
+   Layered ON TOP of style.css (loaded after it).
+   Palette: Navy #0B2447 · Saffron #F4772E · Green #128C4A
+            Red #D63447 · Gold #E9B949 · Mist #F6F8FC
+   ============================================================ */
+
+:root {
+  --eci-navy: #0b2447;
+  --eci-navy-2: #12315e;
+  --eci-saffron: #f4772e;
+  --eci-green: #128c4a;
+  --eci-green-soft: #e7f6ee;
+  --eci-red: #d63447;
+  --eci-gold: #e9b949;
+  --eci-ink: #1c2a3a;
+  --eci-muted: #64748b;
+  --eci-line: #e3e9f2;
+  --eci-mist: #f6f8fc;
+  --eci-white: #ffffff;
+  --eci-radius: 14px;
+  --eci-shadow: 0 10px 34px rgba(11, 36, 71, 0.10);
+  --eci-shadow-sm: 0 4px 14px rgba(11, 36, 71, 0.08);
+  --eci-font-head: "Poppins", "Raleway", sans-serif;
+  --eci-font-body: "Inter", "Open Sans", sans-serif;
+
+  /* Fixed-bar geometry: header, live widget and footer are all pinned, so
+     every offset below is derived from these four numbers. */
+  --tri-h: 4px;
+  --hdr-h: 68px;
+  --widget-h: 64px;
+  --footer-h: 60px;
+  --top-offset: calc(var(--tri-h) + var(--hdr-h) + var(--widget-h));
+}
+
+html,
+body {
+  font-family: var(--eci-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--eci-font-head);
+  color: var(--eci-navy);
+}
+
+/* ------------------------------------------------------------
+   Header — white institutional bar with tricolor accent
+   ------------------------------------------------------------ */
+
+#eci-tricolor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--tri-h);
+  z-index: 997;
+  background: linear-gradient(90deg,
+      var(--eci-saffron) 0 33.3%,
+      #ffffff 33.3% 66.6%,
+      var(--eci-green) 66.6% 100%);
+}
+
+/* The header keeps one height at every scroll position so the live widget
+   underneath it never separates from it. */
+#header,
+#header.header-scrolled,
+#header.header-fixed {
+  top: var(--tri-h);
+  height: var(--hdr-h);
+  padding: 0;
+  background: #ffffff !important;
+  box-shadow: 0 2px 18px rgba(11, 36, 71, 0.08);
+  display: flex;
+  align-items: center;
+}
+
+#header > .container {
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#header > .container::before,
+#header > .container::after {
+  display: none; /* Bootstrap 3 clearfix pseudo-elements break flex layout */
+}
+
+#header #logo {
+  float: none !important;
+}
+
+#header #nav-menu-container {
+  float: none;
+}
+
+#header #logo h1 {
+  font-family: var(--eci-font-head);
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--eci-navy);
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+#header #logo h1 span {
+  color: var(--eci-saffron);
+}
+
+#header #logo h1 a,
+#header #logo h1 a:hover {
+  color: var(--eci-navy);
+}
+
+.nav-menu a {
+  font-family: var(--eci-font-head);
+  color: #44546a;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.nav-menu .menu-active a,
+.nav-menu a:hover {
+  color: var(--eci-saffron);
+}
+
+.nav-menu > li > a {
+  position: relative;
+}
+
+/* Underline indicator on active item */
+.nav-menu > li.menu-active > a::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 0;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--eci-saffron);
+}
+
+#mobile-nav a {
+  color: var(--eci-ink);
+  font-family: var(--eci-font-head);
+  font-weight: 600;
+}
+
+/* Admin link: hidden by default; app.js shows it only for the admin wallet */
+.admin-only-link {
+  display: none;
+}
+
+/* ------------------------------------------------------------
+   Intro / hero backdrop (keeps existing photo, tinted)
+   ------------------------------------------------------------ */
+
+#intro {
+  min-height: 100vh;
+  /* main.js pins an inline pixel height on phones, which clips tall pages
+     and lets the footer sit on top of the card. Let the section grow. */
+  height: auto !important;
+  align-items: flex-start;
+  padding: calc(var(--top-offset) + 36px) 15px calc(var(--footer-h) + 40px) 15px;
+  background: linear-gradient(135deg, rgba(11, 36, 71, 0.94) 0%, rgba(18, 49, 94, 0.88) 55%, rgba(11, 36, 71, 0.94) 100%),
+    url(../images/intro-bg.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+#intro:before {
+  background: rgba(8, 22, 46, 0.35);
+}
+
+/* Same 1170px column as the header, so logo, widget and card share edges */
+#intro .intro-container {
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+#intro h1 {
+  font-family: var(--eci-font-head);
+  font-size: 34px;
+  font-weight: 700;
+  text-transform: initial;
+  letter-spacing: 0.3px;
+  margin-bottom: 10px;
+}
+
+#intro h1 span {
+  color: var(--eci-gold);
+}
+
+/* ------------------------------------------------------------
+   Cards
+   ------------------------------------------------------------ */
+
+.eci-card {
+  background: var(--eci-white);
+  border-radius: var(--eci-radius);
+  box-shadow: var(--eci-shadow);
+  padding: 28px 30px;
+  text-align: left;
+  border: 1px solid rgba(227, 233, 242, 0.9);
+}
+
+.eci-card + .eci-card {
+  margin-top: 18px;
+}
+
+.eci-card-title {
+  font-family: var(--eci-font-head);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--eci-navy);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px 0;
+}
+
+.eci-icon-chip {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: #fff;
+  background: var(--eci-navy);
+  flex: 0 0 auto;
+}
+
+.eci-icon-chip.saffron { background: var(--eci-saffron); }
+.eci-icon-chip.green   { background: var(--eci-green); }
+.eci-icon-chip.red     { background: var(--eci-red); }
+.eci-icon-chip.gold    { background: var(--eci-gold); color: #5c4300; }
+
+.eci-subtle {
+  color: var(--eci-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.eci-divider {
+  border: 0;
+  border-top: 1px solid var(--eci-line);
+  margin: 18px 0;
+}
+
+/* ------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------ */
+
+.btn.eci-btn {
+  font-family: var(--eci-font-head);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 10px;
+  padding: 11px 20px;
+  border: none;
+  color: #fff;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  box-shadow: var(--eci-shadow-sm);
+  letter-spacing: 0.2px;
+}
+
+.btn.eci-btn:hover,
+.btn.eci-btn:focus {
+  color: #fff;
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  box-shadow: 0 8px 22px rgba(11, 36, 71, 0.18);
+}
+
+.btn.eci-btn:disabled,
+.btn.eci-btn.disabled {
+  opacity: 0.55;
+  transform: none;
+  cursor: not-allowed;
+}
+
+.eci-btn.saffron { background: linear-gradient(135deg, #f4772e, #e05f14); }
+.eci-btn.navy    { background: linear-gradient(135deg, #14396f, #0b2447); }
+.eci-btn.green   { background: linear-gradient(135deg, #17a458, #0f7a40); }
+.eci-btn.red     { background: linear-gradient(135deg, #e04a5c, #c22b3d); }
+.eci-btn.ghost   {
+  background: #fff;
+  color: var(--eci-navy);
+  border: 1.5px solid var(--eci-line);
+  box-shadow: none;
+}
+.eci-btn.ghost:hover { color: var(--eci-saffron); border-color: var(--eci-saffron); }
+
+/* Small pill copy-chips (wallet address, tx hash) */
+.eci-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--eci-mist);
+  border: 1px solid var(--eci-line);
+  color: var(--eci-navy);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 12px;
+  border-radius: 8px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+  word-break: break-all;
+}
+
+.eci-chip:hover {
+  border-color: var(--eci-saffron);
+  color: var(--eci-saffron);
+}
+
+/* ------------------------------------------------------------
+   Stat tiles
+   ------------------------------------------------------------ */
+
+.eci-stat {
+  background: var(--eci-mist);
+  border: 1px solid var(--eci-line);
+  border-radius: 12px;
+  padding: 16px 14px;
+  text-align: center;
+  height: 100%;
+}
+
+.eci-stat .eci-stat-value {
+  font-family: var(--eci-font-head);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--eci-navy);
+  line-height: 1.1;
+}
+
+.eci-stat .eci-stat-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--eci-muted);
+  margin-top: 4px;
+}
+
+.eci-stat.accent-saffron .eci-stat-value { color: var(--eci-saffron); }
+.eci-stat.accent-green   .eci-stat-value { color: var(--eci-green); }
+.eci-stat.accent-red     .eci-stat-value { color: var(--eci-red); }
+
+/* ------------------------------------------------------------
+   Global Live Election Widget
+   ------------------------------------------------------------ */
+
+#eciLiveWidget {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: calc(var(--tri-h) + var(--hdr-h));
+  height: var(--widget-h);
+  z-index: 996;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--eci-line);
+  box-shadow: 0 4px 16px rgba(11, 36, 71, 0.06);
+}
+
+#eciLiveWidget #eciWidgetBody {
+  width: 100%;
+}
+
+#eciLiveWidget .eci-w-inner {
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
+
+.eci-w-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--eci-font-head);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.eci-w-state .eci-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.eci-w-state.live {
+  color: var(--eci-green);
+  background: var(--eci-green-soft);
+}
+
+.eci-w-state.live .eci-dot {
+  animation: eciPulse 1.4s ease-in-out infinite;
+}
+
+.eci-w-state.soon {
+  color: var(--eci-saffron);
+  background: #fdeee2;
+}
+
+.eci-w-state.over {
+  color: #5b6572;
+  background: #eef1f5;
+}
+
+@keyframes eciPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.35; transform: scale(0.8); }
+}
+
+.eci-w-stat {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  min-width: 86px;
+}
+
+.eci-w-stat b {
+  font-family: var(--eci-font-head);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--eci-navy);
+}
+
+.eci-w-stat span {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--eci-muted);
+}
+
+.eci-w-sep {
+  width: 1px;
+  height: 34px;
+  background: var(--eci-line);
+}
+
+.eci-w-timer {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eci-w-timer .eci-clock-ic {
+  color: var(--eci-saffron);
+  font-size: 18px;
+}
+
+.eci-w-timer b {
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--eci-navy);
+  letter-spacing: 1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.eci-w-timer small {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--eci-muted);
+  text-align: right;
+}
+
+/* Compact two-row widget for tablets and phones:
+   row 1 = status + countdown, row 2 = the four counters in equal columns */
+@media (max-width: 900px) {
+  :root { --widget-h: 92px; }
+
+  #eciLiveWidget .eci-w-inner {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    row-gap: 10px;
+    column-gap: 8px;
+    padding: 0 18px;
+  }
+
+  .eci-w-sep { display: none; }
+
+  .eci-w-state {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    justify-self: start;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .eci-w-timer {
+    grid-column: 3 / span 2;
+    grid-row: 1;
+    margin-left: 0;
+    justify-self: end;
+    gap: 8px;
+  }
+
+  .eci-w-timer b { font-size: 16px; letter-spacing: 0.4px; }
+  .eci-w-timer small { font-size: 9.5px; letter-spacing: 0.5px; }
+  .eci-w-timer .eci-clock-ic { font-size: 16px; }
+
+  .eci-w-stat {
+    grid-row: 2;
+    min-width: 0;
+    align-items: flex-start;
+  }
+
+  .eci-w-stat b { font-size: 16px; }
+  .eci-w-stat span { font-size: 9.5px; letter-spacing: 0.5px; }
+}
+
+@media (max-width: 400px) {
+  #eciLiveWidget .eci-w-inner { padding: 0 12px; column-gap: 4px; }
+  .eci-w-timer b { font-size: 14px; letter-spacing: 0; }
+  .eci-w-timer .eci-clock-ic { display: none; }
+}
+
+/* ------------------------------------------------------------
+   Tables
+   ------------------------------------------------------------ */
+
+.table.eci-table {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--eci-line);
+  margin-bottom: 0;
+}
+
+.table.eci-table thead th {
+  background: var(--eci-navy);
+  color: #fff;
+  font-family: var(--eci-font-head);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  border: none;
+  padding: 12px 14px;
+}
+
+.table.eci-table tbody td,
+.table.eci-table tbody th {
+  padding: 12px 14px;
+  vertical-align: middle;
+  border-color: var(--eci-line);
+  font-size: 14px;
+}
+
+.table.eci-table tbody tr:nth-of-type(odd) {
+  background: #fbfcfe;
+}
+
+/* ------------------------------------------------------------
+   Results bars
+   ------------------------------------------------------------ */
+
+.eci-rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  font-family: var(--eci-font-head);
+  font-weight: 700;
+  font-size: 13px;
+  background: var(--eci-mist);
+  color: var(--eci-navy);
+  border: 1px solid var(--eci-line);
+}
+
+.eci-rank.r1 { background: linear-gradient(135deg, #f6d479, #e9b949); color: #5c4300; border: none; }
+.eci-rank.r2 { background: linear-gradient(135deg, #d5dce6, #b7c1cf); color: #33404f; border: none; }
+.eci-rank.r3 { background: linear-gradient(135deg, #edb98a, #d68d4f); color: #4d2c0a; border: none; }
+
+.eci-bar-track {
+  background: #edf1f7;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+  min-width: 120px;
+}
+
+.eci-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f4772e, #e9b949);
+  min-width: 6px;
+  transition: width 0.9s ease;
+}
+
+.eci-bar-fill.green { background: linear-gradient(90deg, #17a458, #7ed6a2); }
+
+/* ------------------------------------------------------------
+   Voter greeting + post-vote celebration
+   ------------------------------------------------------------ */
+
+.eci-greet {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.eci-greet h2 {
+  font-family: var(--eci-font-head);
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  color: #fff;
+}
+
+.eci-greet p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14.5px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.eci-congrats {
+  text-align: center;
+  padding: 10px 0 4px 0;
+}
+
+.eci-congrats .eci-tick {
+  width: 84px;
+  height: 84px;
+  margin: 6px auto 16px auto;
+  border-radius: 50%;
+  background: var(--eci-green-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: eciPop 0.55s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+.eci-congrats .eci-tick i {
+  font-size: 40px;
+  color: var(--eci-green);
+}
+
+@keyframes eciPop {
+  0%   { transform: scale(0.3); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.eci-logout-ring {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: 14px auto 4px auto;
+}
+
+.eci-logout-ring svg {
+  transform: rotate(-90deg);
+}
+
+.eci-logout-ring .eci-ring-bg {
+  fill: none;
+  stroke: var(--eci-line);
+  stroke-width: 5;
+}
+
+.eci-logout-ring .eci-ring-fg {
+  fill: none;
+  stroke: var(--eci-saffron);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 163.4;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.eci-logout-ring b {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--eci-font-head);
+  font-size: 22px;
+  color: var(--eci-navy);
+}
+
+/* ------------------------------------------------------------
+   Alerts (restyled Bootstrap 3 alerts)
+   ------------------------------------------------------------ */
+
+.alert {
+  border-radius: 10px;
+  border: 1px solid var(--eci-line);
+  font-size: 14px;
+  padding: 13px 16px;
+  box-shadow: none;
+}
+
+.alert-success { background: var(--eci-green-soft); border-color: #bfe6d0; color: #0e6b39; }
+.alert-info    { background: #eaf2fd; border-color: #c9dcf6; color: #14498f; }
+.alert-warning { background: #fdf3e7; border-color: #f6ddc2; color: #9a5410; }
+.alert-danger  { background: #fdecee; border-color: #f5c6cd; color: #a32133; }
+
+/* ------------------------------------------------------------
+   Forms
+   ------------------------------------------------------------ */
+
+.eci-card .form-control {
+  border-radius: 9px;
+  border: 1.5px solid var(--eci-line);
+  box-shadow: none;
+  height: 42px;
+  font-size: 14px;
+  color: var(--eci-ink);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.eci-card .form-control:focus {
+  border-color: var(--eci-saffron);
+  box-shadow: 0 0 0 3px rgba(244, 119, 46, 0.14);
+}
+
+.eci-card label {
+  font-family: var(--eci-font-head);
+  font-weight: 600;
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #44546a;
+  margin-bottom: 6px;
+}
+
+/* ------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------ */
+
+/* Footer is pinned to the bottom of the viewport on every page and every
+   scroll position; #intro reserves matching space so nothing hides behind it. */
+#eciFooter {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--footer-h);
+  z-index: 996;
+  display: flex;
+  align-items: center;
+  background: var(--eci-navy);
+  color: #c7d2e4;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 -4px 18px rgba(11, 36, 71, 0.18);
+}
+
+#eciFooter .eci-f-inner {
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+#eciFooter .eci-f-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--eci-font-head);
+  font-weight: 700;
+  color: #fff;
+  font-size: 15px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+#eciFooter .eci-f-brand i {
+  color: var(--eci-gold);
+}
+
+#eciFooter .eci-f-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.eci-f-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  font-family: var(--eci-font-head);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1;
+  border-radius: 999px;
+  padding: 9px 18px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.eci-f-btn:hover,
+.eci-f-btn:focus {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: var(--eci-gold);
+  color: #fff;
+  text-decoration: none;
+}
+
+.eci-f-btn:focus-visible {
+  outline: 2px solid var(--eci-gold);
+  outline-offset: 2px;
+}
+
+.eci-f-btn i {
+  font-size: 14px;
+  color: var(--eci-gold);
+}
+
+/* Tricolor now runs along the top edge of the bar */
+#eciFooter .eci-f-tricolor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: auto;
+  height: 3px;
+  border-radius: 0;
+  background: linear-gradient(90deg,
+      var(--eci-saffron) 0 33.3%,
+      #ffffff 33.3% 66.6%,
+      var(--eci-green) 66.6% 100%);
+}
+
+/* ------------------------------------------------------------
+   Loader (kept, recolored)
+   ------------------------------------------------------------ */
+
+#loader .loader circle {
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+  animation: eciSpinDash 1.6s ease-in-out infinite;
+}
+
+#loader .loader circle:nth-child(1) { stroke: var(--eci-saffron); }
+#loader .loader circle:nth-child(2) { stroke: var(--eci-gold); animation-delay: 0.15s; }
+#loader .loader circle:nth-child(3) { stroke: var(--eci-green); animation-delay: 0.3s; }
+#loader .loader circle:nth-child(4) { stroke: var(--eci-navy); animation-delay: 0.45s; }
+
+@keyframes eciSpinDash {
+  0%   { stroke-dasharray: 30 900; }
+  50%  { stroke-dasharray: 700 900; }
+  100% { stroke-dasharray: 30 900; }
+}
+
+/* ------------------------------------------------------------
+   Page base
+   ------------------------------------------------------------ */
+
+body {
+  background: var(--eci-mist);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --hdr-h: 56px;
+    --footer-h: 56px;
+  }
+
+  #header #logo h1 { font-size: 21px; letter-spacing: 1px; }
+  #intro { padding-left: 0; padding-right: 0; }
+  #intro .intro-container { padding: 0 12px; }
+  .eci-card { padding: 20px 16px; }
+  #intro h1 { font-size: 26px; }
+
+  #eciFooter .eci-f-inner { padding: 0 12px; gap: 8px; }
+  #eciFooter .eci-f-brand { font-size: 13px; letter-spacing: 0.5px; gap: 7px; }
+  #eciFooter .eci-f-actions { gap: 6px; }
+  .eci-f-btn { padding: 8px 12px; font-size: 12px; gap: 6px; }
+}
+
+@media (max-width: 360px) {
+  #eciFooter .eci-f-brand { display: none; }
+  #eciFooter .eci-f-actions { width: 100%; justify-content: center; }
+}
+
+/* ============================================================
+   UI / UX FIX LAYER
+   Presentation-only corrections. No markup contracts with app.js /
+   widget.js are changed; these rules restyle what they already emit.
+   ============================================================ */
+
+/* --- Hero copy ------------------------------------------------ */
+
+#intro .eci-hero-sub {
+  max-width: 64ch;
+  margin: 0 auto 28px auto;
+  font-size: 16.5px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+/* style.css styles every "#intro p" as bold 20px near-white text, which
+   made helper copy inside white cards nearly invisible. Reset inside cards. */
+#intro .eci-card p {
+  color: var(--eci-ink);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0 0 12px 0;
+}
+
+#intro .eci-card p.eci-subtle,
+#intro .eci-card .eci-subtle {
+  color: var(--eci-muted);
+  font-size: 13.5px;
+}
+
+#intro .eci-card .alert p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Voter greeting ------------------------------------------- */
+
+#intro .eci-greet p {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 10px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.eci-greet .eci-chip {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+.eci-greet .eci-chip:hover {
+  border-color: var(--eci-gold);
+  color: var(--eci-gold);
+}
+
+.eci-greet .eci-greet-sep {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* --- Wallet + role bar ---------------------------------------- */
+
+.eci-wallet-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 10px;
+}
+
+.eci-wallet-row .text-right {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.eci-wallet-row #electionStateBadge,
+.eci-wallet-row #roleBadge {
+  margin: 0 !important;
+}
+
+#accountAddress {
+  line-height: 1.9;
+}
+
+.eci-card code {
+  color: var(--eci-navy);
+  background: var(--eci-mist);
+  border: 1px solid var(--eci-line);
+  border-radius: 6px;
+  padding: 2px 7px;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 12px;
+  word-break: break-all;
+  white-space: normal;
+}
+
+/* --- Badges: JS emits Bootstrap 5 names (bg-*) on a Bootstrap 3 sheet --- */
+
+#roleBadge .badge,
+#electionStateBadge .badge {
+  display: inline-block;
+  font-family: var(--eci-font-head);
+  font-size: 11.5px !important;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 8px 14px !important;
+  border-radius: 999px !important;
+  border: 0;
+}
+
+#roleBadge .badge.bg-danger      { background: var(--eci-red) !important; color: #fff; }
+#roleBadge .badge.bg-secondary   { background: var(--eci-navy) !important; color: #fff; }
+#electionStateBadge .badge.bg-warning   { background: #fdeee2 !important; color: #b4530f; }
+#electionStateBadge .badge.bg-success   { background: var(--eci-green-soft) !important; color: var(--eci-green); }
+#electionStateBadge .badge.bg-secondary { background: #eef1f5 !important; color: #5b6572; }
+
+/* --- Ghost buttons emitted as .btn-outline-secondary ---------- */
+
+.btn-outline-secondary {
+  background: #fff;
+  color: var(--eci-navy);
+  border: 1.5px solid var(--eci-line);
+  border-radius: 8px;
+  font-family: var(--eci-font-head);
+  font-weight: 600;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  background: #fff;
+  color: var(--eci-saffron);
+  border-color: var(--eci-saffron);
+}
+
+.alert-primary {
+  border-color: #c9dcf6;
+}
+
+/* --- Buttons -------------------------------------------------- */
+
+.btn.eci-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1.3;
+  white-space: normal;
+}
+
+.btn.eci-btn.btn-block {
+  display: flex;
+}
+
+.btn.eci-btn:not(.btn-block) {
+  margin: 0 8px 8px 0;
+}
+
+.input-group-btn .btn.eci-btn {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.btn.eci-btn:focus-visible,
+.eci-card .form-control:focus-visible,
+.nav-menu a:focus-visible,
+#mobile-nav a:focus-visible,
+#mobile-nav-toggle:focus-visible,
+.eci-chip:focus-visible {
+  outline: 2px solid var(--eci-saffron);
+  outline-offset: 2px;
+}
+
+/* --- Input group: form-control + button join cleanly --------- */
+
+.eci-card .input-group .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 0;
+}
+
+.eci-card .input-group .btn.eci-btn {
+  height: 42px;
+  border-radius: 0 9px 9px 0;
+  box-shadow: none;
+}
+
+/* --- Tables --------------------------------------------------- */
+
+.table-responsive {
+  border: 0;
+  margin-bottom: 0;
+}
+
+.table.eci-table thead th {
+  white-space: nowrap;
+}
+
+/* --- Post-vote countdown ring --------------------------------
+   style.css animates every bare <circle> (page loader). Stop that from
+   spinning and off-centering the 10-second auto-switch ring. */
+.eci-logout-ring circle {
+  animation: none;
+  transform: none;
+  will-change: auto;
+}
+
+/* --- Whitelist list ------------------------------------------ */
+
+.list-group-item {
+  border-color: var(--eci-line);
+}
+
+/* --- Mobile navigation ---------------------------------------- */
+
+@media (max-width: 991px) {
+  #mobile-nav-toggle {
+    top: var(--tri-h);
+    right: 0;
+    height: var(--hdr-h);
+    margin: 0;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+  }
+
+  #mobile-nav-toggle i {
+    color: var(--eci-navy);
+    font-size: 24px;
+  }
+
+  body.mobile-nav-active #mobile-nav-toggle i {
+    color: #fff;
+  }
+
+  #mobile-nav {
+    width: min(280px, 84vw);
+    left: calc(-1 * min(280px, 84vw) - 20px);
+    background: var(--eci-navy);
+    padding-top: calc(var(--tri-h) + 18px);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
+  }
+
+  #mobile-nav ul li a {
+    font-family: var(--eci-font-head);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 13px 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  #mobile-nav ul li a:hover,
+  #mobile-nav ul li.menu-active a {
+    color: var(--eci-gold);
+  }
+}
+
+/* --- Motion --------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .eci-w-state.live .eci-dot,
+  .eci-congrats .eci-tick,
+  #loader .loader circle {
+    animation: none;
+  }
+
+  .btn.eci-btn,
+  .eci-bar-fill {
+    transition: none;
+  }
+}
+
+/* --- Results: ledger summary + phone-width table -------------- */
+
+.eci-ledger-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+
+@media (max-width: 991px) {
+  .eci-ledger-row > [class*="col-"] {
+    width: 100%;
+    text-align: left;
+  }
+
+  .eci-ledger-row > .text-right br { display: none; }
+}
+
+@media (max-width: 575px) {
+  .table.eci-table thead th {
+    padding: 10px 8px;
+    font-size: 11px;
+    letter-spacing: 0.3px;
+    white-space: normal;
+  }
+
+  .table.eci-table tbody td,
+  .table.eci-table tbody th {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+
+  .table.eci-table th[style*="width: 64px"] { width: 46px !important; }
+  .table.eci-table th[style*="width: 260px"] { width: auto !important; }
+  .table.eci-table td > div[style*="min-width"] { min-width: 0 !important; }
+  /* Keep the vote count and share text; drop the bar so the row fits */
+  .table.eci-table .eci-bar-track { display: none; }
+}
+
+/* Bootstrap 3 forces nowrap on every cell inside .table-responsive on small
+   screens. Let text wrap so tables fit the card instead of scrolling sideways. */
+@media (max-width: 767px) {
+  .table-responsive > .table.eci-table > thead > tr > th,
+  .table-responsive > .table.eci-table > tbody > tr > th,
+  .table-responsive > .table.eci-table > tbody > tr > td {
+    white-space: normal;
+  }
+}
+
+/* Voter whitelist: stack input and button on phones so the 0x… placeholder
+   and the action are both fully readable */
+@media (max-width: 575px) {
+  .eci-card .input-group {
+    display: block;
+  }
+
+  .eci-card .input-group .form-control {
+    display: block;
+    float: none;
+    width: 100%;
+    border-right: 1.5px solid var(--eci-line);
+    border-radius: 9px;
+    font-size: 13px;
+  }
+
+  .eci-card .input-group .input-group-btn {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .eci-card .input-group .btn.eci-btn {
+    width: 100%;
+    border-radius: 10px;
+  }
+}

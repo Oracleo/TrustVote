@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TrustVote — Official Tally &amp; Results</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="images/favicon.png" rel="icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="others/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="others/animate/animate.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/theme.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="eci-tricolor"></div>
+
+<header id="header">
+    <div class="container">
+        <div id="logo" class="pull-left">
+            <h1><a href="index.html"><span>TRUST</span>VOTE</a></h1>
+        </div>
+        <nav id="nav-menu-container">
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html">Portal Home</a></li>
+                <li><a href="vote.html">Vote</a></li>
+                <li class="menu-active"><a href="results.html">Results</a></li>
+                <li class="admin-only-link"><a href="admin.html">Admin Panel</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div id="eciLiveWidget" aria-live="polite">
+  <div id="eciWidgetBody"></div>
+</div>
+
+<section id="intro">
+    <div class="intro-container wow fadeIn">
+        <h1>Election <span>Tally &amp; Results</span></h1>
+
+        <div id="loader">
+            <svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
+                <circle cx="170" cy="170" r="160"/>
+                <circle cx="170" cy="170" r="135"/>
+                <circle cx="170" cy="170" r="110"/>
+                <circle cx="170" cy="170" r="85"/>
+            </svg>
+        </div>
+
+        <div id="content" style="display: none;" class="eci-card">
+
+            <div class="row eci-wallet-row">
+                <div class="col-md-7 text-left">
+                    <div id="accountAddress" style="font-size: 13px; word-break: break-all; min-height: 22px;"></div>
+                </div>
+                <div class="col-md-5 text-right">
+                    <span id="roleBadge"></span>
+                    <span id="electionStateBadge" style="margin-left: 5px;"></span>
+                </div>
+            </div>
+
+            <!-- Election Status Header -->
+            <div style="background: var(--eci-mist); border: 1px solid var(--eci-line); border-radius: 12px; padding: 14px 18px; margin-top: 16px;">
+                <div class="row eci-ledger-row">
+                    <div class="col-md-8 text-left">
+                        <strong style="color: var(--eci-navy); font-family: var(--eci-font-head);">Official Smart-Contract Ledger</strong><br/>
+                        <small class="eci-subtle">All tallies below are read directly from on-chain state variables.</small>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <span class="eci-subtle" style="font-size: 13px;">Total Ballots Cast:</span><br/>
+                        <strong style="font-size: 22px; color: var(--eci-red); font-family: var(--eci-font-head);" id="statVotesCast">0</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Table -->
+            <div id="eciBarChart"></div>
+            <div class="table-responsive">
+            <table class="table eci-table" style="margin-top: 18px;">
+                <thead>
+                <tr>
+                    <th scope="col" style="width: 64px;">Rank</th>
+                    <th scope="col">Candidate Name</th>
+                    <th scope="col">Affiliated Party</th>
+                    <th scope="col" style="width: 260px;">Verified Votes</th>
+                </tr>
+                </thead>
+                <tbody id="candidatesResults">
+                </tbody>
+            </table>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer id="eciFooter">
+  <div class="eci-f-inner">
+    <div class="eci-f-tricolor"></div>
+    <div class="eci-f-brand"><i class="fa fa-university"></i> TRUSTVOTE </div>
+    <div class="eci-f-actions">
+      <!-- data-a / data-b carry split, reversed fragments; widget.js reassembles
+           them only on click, so the address never appears in the page source.
+           Regenerate a fragment with: "text".split('').reverse().join('') -->
+      <a href="#" class="eci-f-btn" data-kind="mail" data-a="sawsibbirdalin.rd" data-b="moc.liamg">
+        <i class="fa fa-envelope"></i> Email Us
+      </a>
+      <a href="#" class="eci-f-btn" data-kind="phone" data-a="308799444819+" data-b="">
+        <i class="fa fa-phone"></i> Call Us
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+<script src="js/app.js"></script>
+<script src="js/widget.js"></script>
+<script src="others/jquery/jquery.min.js"></script>
+<script src="others/jquery/jquery-migrate.min.js"></script>
+<script src="others/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="others/easing/easing.min.js"></script>
+<script src="others/superfish/hoverIntent.js"></script>
+<script src="others/superfish/superfish.min.js"></script>
+<script src="others/wow/wow.min.js"></script>
+<script src="others/venobox/venobox.min.js"></script>
+<script src="others/owlcarousel/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
